@@ -19,5 +19,11 @@ export class NovaTransferenciaComponent {
     console.log('Destino: ' + this.destino);*/
 
     this.aoTransferir.emit({valor: this.valor, destino: this.destino});
+    this.limparCampos();
+  }
+
+  limparCampos(){
+    this.valor = 0;
+    this.valor = 0;
   }
 }
