@@ -1,4 +1,7 @@
+
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Transferencia } from '../models/transferencia.model';
+import { TransferenciaService } from '../services/transferencia.service';
 
 
 @Component({
@@ -13,13 +16,21 @@ export class NovaTransferenciaComponent {
   valor: number = 12; /* Iniciar com valor quando for numerico ou adicionar o !*/
   destino: number = 123; /* Iniciar com valor quando for numerico ou adicionar o !*/
 
+  constructor(private service: TransferenciaService){}
+
+
   transferir() {
     console.log('Solicitada nova transferencia');
-    /*console.log('Valor: ' + this.valor );
-    console.log('Destino: ' + this.destino);*/
 
-    this.aoTransferir.emit({valor: this.valor, destino: this.destino});
-    this.limparCampos();
+    const valorEmitir: Transferencia = {valor: this.valor, destino: this.destino};
+
+    this.service.adicionar(valorEmitir).subscribe(resultado => {
+      console.log(resultado);
+      this.limparCampos();
+    },
+    (error) => console.error(error)
+    );
+
   }
 
   limparCampos(){
